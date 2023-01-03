@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-function FetchPokemonData() {
+function useFetchPokemonData() {
   const [pokemon, setPokemon] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -33,4 +33,4 @@ function FetchPokemonData() {
     onsearch: searchHandler,
   };
 }
-export default FetchPokemonData;
+export default useFetchPokemonData;

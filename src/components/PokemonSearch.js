@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import FetchPokemonData from "./../hooks/FetchPokemonData";
+import useFetchPokemonData from "./../hooks/useFetchPokemonData";
 
 function PokemonSearch() {
   const [searchInput, setSearchInput] = useState("");
   const [pokemonList, setPokemonList] = useState([]);
-  const { pokemon, loading, error, onsearch } = FetchPokemonData();
+  const { pokemon, loading, error, onsearch } = useFetchPokemonData();
 
   const searchHandler = () => {
     onsearch(searchInput.toLowerCase());
