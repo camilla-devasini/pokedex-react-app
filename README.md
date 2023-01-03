@@ -1,4 +1,8 @@
-# Getting Started with Create React App
+<h1>Pokedex react-app</h1>
+<h2>This exercise consists in developing a search app for the Pokemon world, the so called "Pokedex"</h2>
+<h3>The app is developed in <strong>React.js</strong></h3>
+
+## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
