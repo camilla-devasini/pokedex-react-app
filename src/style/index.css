@@ -1,0 +1,23 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto&family=Roboto+Flex:opsz@8..144&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Roboto Flex", sans-serif;
+  color: var(--main-dark-grey-text-color);
+}
+
+:root {
+  --main-dark-red-color: #c21212;
+  --main-dark-grey-text-color: #353535;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--main-dark-red-color);
+  border-radius: 8px;
+}

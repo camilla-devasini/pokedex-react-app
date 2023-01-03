@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 function useFetchPokemonData() {
-  const [pokemon, setPokemon] = useState(null);
+  const [pokemonData, setPokemonData] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -18,7 +18,7 @@ function useFetchPokemonData() {
       } else {
         const json = await response.json();
         console.log(json);
-        setPokemon(json);
+        setPokemonData(json);
       }
     } catch (error) {
       setError(new Error("Error occurred"));
@@ -27,7 +27,7 @@ function useFetchPokemonData() {
     }
   };
   return {
-    pokemon,
+    pokemonData,
     loading,
     error,
     onsearch: searchHandler,

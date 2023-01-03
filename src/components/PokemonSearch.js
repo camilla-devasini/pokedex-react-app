@@ -1,15 +1,23 @@
 import { useState, useEffect } from "react";
-import useFetchPokemonData from "./../hooks/useFetchPokemonData";
+import useFetchPokemonData from "../customHooks/useFetchPokemonData";
+import MainButton from "./MainButton";
+import PageWrapper from "./PageWrapper";
+import "./style/pokemonSearch.scss";
+import pokeball from "./../assets/pokeball.png";
 
 function PokemonSearch() {
   const [searchInput, setSearchInput] = useState("");
   const [pokemonList, setPokemonList] = useState([]);
-  const { pokemon, loading, error, onsearch } = useFetchPokemonData();
+  const { pokemonData, loading, error, onsearch } = useFetchPokemonData();
 
   const searchHandler = () => {
-    onsearch(searchInput.toLowerCase());
+    if (searchInput) {
+      onsearch(searchInput.toLowerCase());
+      setSearchInput("");
+    }
+    return;
   };
-
+  //Richiamo i nomi di tutti i pokemon esistenti per formare una lista
   const searchAllPokemonNames = async () => {
     try {
       const response = await fetch(
@@ -27,52 +35,78 @@ function PokemonSearch() {
   }, []);
 
   return (
-    <div>
-      <input
-        type="text"
-        value={searchInput}
-        onChange={(event) => setSearchInput(event.currentTarget.value)}
-        placeholder="Type a Pokemon name"
-      />
-      <div className="pokemon-list">
-        <ul>
-          {searchInput === ""
-            ? null
-            : pokemonList
-                .filter((item) => item.name.includes(searchInput))
-                .map((item) => <li key={item.name}>{item.name}</li>)}
-        </ul>
-      </div>
-      <button onClick={searchHandler}>Start searching!</button>
-
-      {loading && <p>Loading</p>}
-      {error && <p>{error.message}</p>}
-
-      {pokemon && <h1>{pokemon.name.toUpperCase()}</h1>}
-
-      <div>
-        {pokemon && <h2>Abilities:</h2>}
-        {pokemon.abilities.map((item, index) => (
-          <ul>
-            <li key={index}>{item.ability.name}</li>
-          </ul>
-        ))}
-
-        {pokemon && <h2>Weight in kilograms:</h2>}
-        <p>{pokemon.weight / 10}</p>
-        {pokemon && <h2>Height in meters:</h2>}
-        <p>{pokemon.height / 10}</p>
-      </div>
-
-      {pokemon && (
-        <div>
-          <img
-            src={pokemon.sprites.other["official-artwork"].front_default}
-            alt="Colorfull representation of the selected Pokemon"
-          ></img>
+    <PageWrapper>
+      <div className="pokedex-container">
+        <h1>Welcome to your Pokedex</h1>
+        <div className="search-container">
+          <input
+            type="text"
+            value={searchInput}
+            onChange={(event) => setSearchInput(event.currentTarget.value)}
+            placeholder="Type a Pokemon name"
+          />
+          <div className="pokemon-list">
+            <ul>
+              {searchInput === ""
+                ? null
+                : pokemonList
+                    .filter((item) => item.name.includes(searchInput))
+                    .map((item, index) => (
+                      <li
+                        onClick={(event) =>
+                          setSearchInput(event.currentTarget.innerHTML)
+                        }
+                        key={index}
+                      >
+                        {item.name}
+                      </li>
+                    ))}
+            </ul>
+          </div>
+          <MainButton onStartResearch={searchHandler}>
+            <img src={pokeball} alt="pokeball"></img>
+          </MainButton>
         </div>
-      )}
-    </div>
+
+        {loading && <p>Loading</p>}
+        {error && <p>{error.message}</p>}
+
+        <div className="pokemon-details-container">
+          <div className="pokemon-details-subcontainer-title">
+            {pokemonData && <h2>{pokemonData.name.toUpperCase()}</h2>}
+            {pokemonData && (
+              <div className="pokemon-img-wrapper">
+                <img
+                  className="pokemon-img"
+                  src={
+                    pokemonData.sprites.other["official-artwork"].front_default
+                  }
+                  alt="Colorfull representation of the selected Pokemon"
+                ></img>
+              </div>
+            )}
+          </div>
+
+          <div className="pokemon-details-subcontainer-details">
+            <div className="pokemon-details-subcontainer-abilities">
+              {pokemonData && <h2>Abilities:</h2>}
+              {pokemonData &&
+                pokemonData.abilities.map((item, index) => (
+                  <ul key={index}>
+                    <li>{item.ability.name}</li>
+                  </ul>
+                ))}
+            </div>
+            <div className="pokemon-details-subcontainer-characteristics">
+              {pokemonData && <h2>Weight (kg):</h2>}
+              <p>{pokemonData && pokemonData.weight / 10}</p>
+              {pokemonData && <h2>Height (m):</h2>}
+              <p>{pokemonData && pokemonData.height / 10}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </PageWrapper>
   );
 }
 export default PokemonSearch;
