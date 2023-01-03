@@ -1,6 +1,6 @@
 <h1>Pokedex react-app</h1>
-<h2>This exercise consists in developing a search app for the Pokemon world, the so called "Pokedex"</h2>
-<h3>The app is developed in <strong>React.js</strong></h3>
+<p>This exercise consists in developing a search app for the Pokemon world, the so called "Pokedex"</p>
+<p>The app is developed in <strong>React.js</strong></p>
 
 ## Getting Started with Create React App
 
